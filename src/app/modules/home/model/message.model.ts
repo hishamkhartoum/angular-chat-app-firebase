@@ -10,4 +10,5 @@ export interface Message {
   createdTime?:Date
   msg?:String
   user?:User
+  receiver?:User
 }

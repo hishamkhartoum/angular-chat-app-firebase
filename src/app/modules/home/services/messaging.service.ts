@@ -24,10 +24,10 @@ export class MessagingService {
   private updatedSnapshot = new Subject<QuerySnapshot<DocumentData>>();
   obsr_UpdatedSnapshot = this.updatedSnapshot.asObservable();
 
-  constructor(id:number) {
+  constructor() {
     initializeApp(environment.firebaseConfig);
     this.db = getFirestore();
-    this.messageCol = collection(this.db, ',messages'+"/"+id);
+    this.messageCol = collection(this.db, 'messages');
 
     // Get Realtime Data
     onSnapshot(this.messageCol, (snapshot) => {
@@ -42,11 +42,7 @@ export class MessagingService {
     return snapshot;
   }
 
-/*  userType:userType
-  createdTime:Date
-  msg:String
-  user:User*/
-  async addMessage(userId: string,createdDate: Date, msg: string,user:User,userType:UserType) {
+  async addMessage(userId: string, createdDate: number, msg: string, user: User, userType: UserType) {
     await addDoc(this.messageCol, {
       createdDate,
       msg,
@@ -62,7 +58,7 @@ export class MessagingService {
     return;
   }
 
-  async updateMessage(userId: string,createdDate: Date, msg: string,user:User,userType:UserType) {
+  async updateMessage(userId: string, createdDate: number, msg: HTMLInputElement, user: User, userType: UserType) {
     const docRef = doc(this.db, 'messages', userId);
     await updateDoc(docRef, { createdDate,
       msg,
