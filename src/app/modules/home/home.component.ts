@@ -20,7 +20,12 @@ export class HomeComponent implements OnInit {
       email: 'test@test.com',
       username: 'transTest'
     },
-    userType:UserType.Trans,
+    recipient: {
+      name: 'Trans test',
+      email: 'test@test.com',
+      username: 'transTest'
+    },
+    userType:UserType.Recipient,
   }
   messageCollectiondata: { id: string, msg: string, user: User,createdDate:Date,userType:UserType }[] | any = [];
 
@@ -78,7 +83,10 @@ export class HomeComponent implements OnInit {
   }
 
   getType(userType: UserType) {
-    let exist:boolean = userType.toString() == '0'?true:false;
-    return exist
+    if(!userType == null){
+      let exist:boolean = userType.toString() == '0'?true:false;
+      return exist
+    }
+    return null;
   }
 }
