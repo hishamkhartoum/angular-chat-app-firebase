@@ -4,6 +4,7 @@ import {DocumentData, QuerySnapshot} from "firebase/firestore";
 import {MessagingService} from "./services/messaging.service";
 import {User} from "./model/user.model";
 import {UserType} from "./model/message.model";
+import {UserService} from "./services/user.service";
 
 @Component({
   selector: 'app-home',
@@ -28,15 +29,23 @@ export class HomeComponent implements OnInit {
     userType:UserType.Recipient,
   }
   messageCollectiondata: { id: string, msg: string, user: User,createdDate:Date,userType:UserType }[] | any = [];
+  userProfile?: Object;
 
 
-  constructor(private messageService: MessagingService) { }
+  constructor(private messageService: MessagingService,private userService:UserService) { }
 
   ngOnInit(): void {
     this.get();
     this.messageService.obsr_UpdatedSnapshot.subscribe((snapshot) => {
       this.updateMessageCollection(snapshot);
     })
+
+    this.userService.getUserByUsername('ex113793').subscribe(
+      (value:any)=>{
+        console.log(value?.data.body.data)
+        this.userProfile=value
+      }
+    )
   }
 
   async add() {
@@ -49,6 +58,8 @@ export class HomeComponent implements OnInit {
     this.message.user.name = "";
     this.message.user.email = "";
   }
+
+
 
   async get() {
     const snapshot = await this.messageService.getMessages();
@@ -83,10 +94,8 @@ export class HomeComponent implements OnInit {
   }
 
   getType(userType: UserType) {
-    if(!userType == null){
+
       let exist:boolean = userType.toString() == '0'?true:false;
       return exist
-    }
-    return null;
   }
 }

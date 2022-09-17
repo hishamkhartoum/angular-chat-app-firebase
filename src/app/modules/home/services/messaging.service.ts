@@ -27,7 +27,7 @@ export class MessagingService {
   constructor() {
     initializeApp(environment.firebaseConfig);
     this.db = getFirestore();
-    this.messageCol = collection(this.db, 'messages');
+    this.messageCol = collection(this.db, 'xxx');
 
     // Get Realtime Data
     onSnapshot(this.messageCol, (snapshot) => {

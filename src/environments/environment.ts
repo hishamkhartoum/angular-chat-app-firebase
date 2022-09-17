@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   //Todo:
+  apiBaseURL: 'http://localhost:8080/swap',
   firebaseConfig: {
     apiKey: "AIzaSyB6LBJ1t4sQfQbl4WKJFKgbj13dBT7cS70",
     authDomain: "fir-test-dashboard.firebaseapp.com",
